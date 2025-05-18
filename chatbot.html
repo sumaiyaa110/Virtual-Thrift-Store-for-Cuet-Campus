@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Live Chat | Campus Thrift</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto Slab', serif;
+      background: linear-gradient(to bottom right, #a18cd1, #fbc2eb);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .chat-container {
+      width: 90%;
+      max-width: 700px;
+      height: 80vh;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      background: linear-gradient(to right, #7F00FF, #00FF87);
+      color: white;
+      padding: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .chat-body {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background: #f4f4f4;
+    }
+
+    .message {
+      max-width: 70%;
+      padding: 10px 15px;
+      margin: 10px 0;
+      border-radius: 20px;
+      position: relative;
+      font-size: 15px;
+    }
+
+    .buyer {
+      background-color: #c0ffb3;
+      align-self: flex-start;
+      margin-right: auto;
+    }
+
+    .seller {
+      background-color: #ffe773;
+      align-self: flex-end;
+      margin-left: auto;
+    }
+
+    .chat-footer {
+      display: flex;
+      padding: 15px;
+      border-top: 1px solid #ddd;
+      background-color: #fafafa;
+    }
+
+    .chat-footer input {
+      flex: 1;
+      padding: 12px 15px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 25px;
+      outline: none;
+    }
+
+    .chat-footer button {
+      background: #7F00FF;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      margin-left: 10px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .chat-footer button:hover {
+      background: #00FF87;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+<div class="chat-container">
+  <div class="chat-header">
+    Live Chat - Buyer & Seller
+  </div>
+  <div class="chat-body" id="chatBody">
+    <div class="message buyer">Hi! Is the Python book still available?</div>
+    <div class="message seller">Yes, it is. It's in good condition.</div>
+  </div>
+  <div class="chat-footer">
+    <input type="text" id="messageInput" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<script>
+  function sendMessage() {
+    const input = document.getElementById("messageInput");
+    const chatBody = document.getElementById("chatBody");
+    const msg = input.value.trim();
+
+    if (msg !== "") {
+      const messageDiv = document.createElement("div");
+      messageDiv.classList.add("message", "buyer"); // You can toggle to "seller" based on role
+      messageDiv.textContent = msg;
+      chatBody.appendChild(messageDiv);
+      input.value = "";
+
+      // Scroll to latest message
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+  }
+</script>
+
+</body>
+</html>

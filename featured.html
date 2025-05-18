@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Featured Products | Campus Thrift</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto Slab', serif;
+      background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+      padding: 40px 20px;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #4b0082;
+    }
+
+    .category-filter {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .category-filter button {
+      padding: 10px 20px;
+      border: none;
+      background: #7F00FF;
+      color: white;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .category-filter button:hover,
+    .category-filter button.active {
+      background: #00FF87;
+      color: #000;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .product-card {
+      background: #fff;
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+      text-align: center;
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .product-card h3 {
+      font-size: 18px;
+      color: #4b0082;
+      margin: 10px 0 5px;
+    }
+
+    .product-card p {
+      color: #555;
+      font-size: 15px;
+    }
+
+    @media (max-width: 600px) {
+      .category-filter {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🌟 Featured Products</h1>
+
+  <div class="category-filter">
+    <button class="active" onclick="filterProducts('all')">All</button>
+    <button onclick="filterProducts('books')">Books</button>
+    <button onclick="filterProducts('gadgets')">Gadgets</button>
+    <button onclick="filterProducts('furniture')">Furniture</button>
+    <button onclick="filterProducts('kitchenware')">Kitchenware</button>
+    <button onclick="filterProducts('daily')">Daily Essentials</button>
+  </div>
+
+  <div class="product-grid" id="productGrid">
+    <!-- Sample Products -->
+    <div class="product-card" data-category="books">
+      <img src="https://via.placeholder.com/250x160?text=Book" alt="Book">
+      <h3>Python Programming</h3>
+      <p>$10</p>
+    </div>
+    <div class="product-card" data-category="gadgets">
+      <img src="https://via.placeholder.com/250x160?text=Gadget" alt="Gadget">
+      <h3>Scientific Calculator</h3>
+      <p>$5</p>
+    </div>
+    <div class="product-card" data-category="furniture">
+      <img src="https://via.placeholder.com/250x160?text=Chair" alt="Chair">
+      <h3>Study Chair</h3>
+      <p>$15</p>
+    </div>
+    <div class="product-card" data-category="kitchenware">
+      <img src="https://via.placeholder.com/250x160?text=Kettle" alt="Kettle">
+      <h3>Electric Kettle</h3>
+      <p>$8</p>
+    </div>
+    <div class="product-card" data-category="daily">
+      <img src="https://via.placeholder.com/250x160?text=Lamp" alt="Lamp">
+      <h3>Table Lamp</h3>
+      <p>$4</p>
+    </div>
+    <div class="product-card" data-category="books">
+      <img src="https://via.placeholder.com/250x160?text=Book" alt="Book">
+      <h3>Engineering Mechanics</h3>
+      <p>$9</p>
+    </div>
+    <div class="product-card" data-category="gadgets">
+      <img src="https://via.placeholder.com/250x160?text=Headphones" alt="Headphones">
+      <h3>Wireless Headphones</h3>
+      <p>$12</p>
+    </div>
+    <div class="product-card" data-category="daily">
+      <img src="https://via.placeholder.com/250x160?text=Mug" alt="Mug">
+      <h3>Coffee Mug</h3>
+      <p>$2</p>
+    </div>
+  </div>
+
+  <script>
+    function filterProducts(category) {
+      const buttons = document.querySelectorAll('.category-filter button');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const products = document.querySelectorAll('.product-card');
+      products.forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

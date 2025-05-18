@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard | Campus Thrift</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto Slab', serif;
+      display: flex;
+      background: linear-gradient(to bottom right, #a18cd1, #fbc2eb);
+      color: #333;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: linear-gradient(to top, #7F00FF, #00FF87);
+      padding: 30px 20px;
+      color: white;
+    }
+
+    .sidebar h2 {
+      font-size: 24px;
+      margin-bottom: 30px;
+    }
+
+    .sidebar a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      margin: 15px 0;
+      font-size: 16px;
+      transition: color 0.3s;
+    }
+
+    .sidebar a:hover {
+      color: #fff000;
+    }
+
+    /* Main Panel */
+    .main-content {
+      flex: 1;
+      padding: 40px;
+    }
+
+    h1 {
+      font-size: 32px;
+      color: #4b0082;
+      margin-bottom: 30px;
+    }
+
+    .user-section {
+      margin-bottom: 40px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background-color: #7F00FF;
+      color: white;
+    }
+
+    td .actions button {
+      background-color: #00FF87;
+      color: #333;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      margin-right: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+
+    td .actions button:hover {
+      background-color: #fff000;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        text-align: center;
+      }
+      .main-content {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="#">Dashboard</a>
+    <a href="#">Manage Buyers</a>
+    <a href="#">Manage Sellers</a>
+    <a href="#">Reported Products</a>
+    <a href="#">Logout</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <h1>👨‍💼 Admin Dashboard</h1>
+
+    <!-- Buyers -->
+    <div class="user-section">
+      <h2>👥 Buyers</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Batch</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="buyerTable">
+          <tr>
+            <td>Sadia Islam</td>
+            <td>sadia@cuet.ac.bd</td>
+            <td>CSE '24</td>
+            <td class="actions">
+              <button onclick="viewUser('Sadia Islam')">View</button>
+              <button onclick="removeUser(this)">Remove</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Tanvir Ahmed</td>
+            <td>tanvir@cuet.ac.bd</td>
+            <td>EEE '23</td>
+            <td class="actions">
+              <button onclick="viewUser('Tanvir Ahmed')">View</button>
+              <button onclick="removeUser(this)">Remove</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Sellers -->
+    <div class="user-section">
+      <h2>🛍️ Sellers</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Batch</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="sellerTable">
+          <tr>
+            <td>Raihan Hossain</td>
+            <td>raihan@cuet.ac.bd</td>
+            <td>ME '22</td>
+            <td class="actions">
+              <button onclick="viewUser('Raihan Hossain')">View</button>
+              <button onclick="removeUser(this)">Remove</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Nusrat Jahan</td>
+            <td>nusrat@cuet.ac.bd</td>
+            <td>CE '24</td>
+            <td class="actions">
+              <button onclick="viewUser('Nusrat Jahan')">View</button>
+              <button onclick="removeUser(this)">Remove</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function removeUser(button) {
+      if (confirm("Are you sure you want to remove this user?")) {
+        button.closest("tr").remove();
+      }
+    }
+
+    function viewUser(name) {
+      alert("Viewing details of: " + name);
+      // You can later link this to a modal or user details page
+    }
+  </script>
+</body>
+</html>

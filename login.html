@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login & Signup | Campus Thrift</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    
+    .logo {
+      margin-bottom: 20px;
+      font-size: 28px;
+      font-weight: 700;
+      color: #4b0082;
+    }
+    
+    .logo i {
+      margin-right: 10px;
+      color: #7F00FF;
+    }
+    
+    .form-container {
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 450px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .form-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, #7F00FF, #e100ff);
+    }
+    
+    .role-toggle {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      background: #f7f7f7;
+      border-radius: 50px;
+      padding: 5px;
+    }
+    
+    .role-toggle button {
+      flex: 1;
+      padding: 10px 20px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-weight: 600;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      color: #555;
+    }
+    
+    .role-toggle button.active {
+      background: #7F00FF;
+      color: white;
+      box-shadow: 0 4px 15px rgba(127, 0, 255, 0.3);
+    }
+    
+    h2 {
+      margin-bottom: 25px;
+      color: #4b0082;
+      font-weight: 600;
+    }
+    
+    .toggle-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    
+    .toggle-btn {
+      padding: 8px 20px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      color: #777;
+      font-weight: 500;
+      position: relative;
+    }
+    
+    .toggle-btn.active {
+      color: #7F00FF;
+      font-weight: 600;
+    }
+    
+    .toggle-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 2px;
+      background: #7F00FF;
+    }
+    
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .input-group {
+      position: relative;
+    }
+    
+    .input-group i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #7F00FF;
+    }
+    
+    input, select {
+      width: 100%;
+      padding: 12px 15px 12px 45px;
+      font-size: 16px;
+      border-radius: 50px;
+      border: 1px solid #e1e1e1;
+      background: #f9f9f9;
+      transition: all 0.3s;
+    }
+    
+    input:focus, select:focus {
+      outline: none;
+      border-color: #7F00FF;
+      box-shadow: 0 0 0 3px rgba(127, 0, 255, 0.1);
+      background: white;
+    }
+    
+    .submit-btn {
+      background: linear-gradient(to right, #7F00FF, #e100ff);
+      color: white;
+      border: none;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(127, 0, 255, 0.3);
+      transition: all 0.3s;
+      margin-top: 10px;
+    }
+    
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 20px rgba(127, 0, 255, 0.4);
+    }
+    
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+    
+    .form-footer {
+      margin-top: 20px;
+      color: #777;
+      font-size: 14px;
+    }
+    
+    .form-footer a {
+      color: #7F00FF;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .form-footer a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    form {
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+      .form-container {
+        padding: 25px;
+      }
+      
+      input, select, .submit-btn {
+        padding: 10px 15px 10px 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <div class="logo">
+      <i class="fas fa-store"></i> Campus Thrift
+    </div>
+    
+    <div class="toggle-container">
+      <button id="loginToggle" class="toggle-btn">Login</button>
+      <button id="signupToggle" class="toggle-btn active">Signup</button>
+    </div>
+    
+    <div class="role-toggle">
+      <button id="buyerBtn" class="active"><i class="fas fa-shopping-cart"></i> Buyer</button>
+      <button id="sellerBtn"><i class="fas fa-store"></i> Seller</button>
+    </div>
+    
+    <h2 id="formTitle">Buyer Signup</h2>
+    
+    <form id="signupForm">
+      <div class="input-group">
+        <i class="fas fa-user"></i>
+        <input type="text" placeholder="Full Name" required>
+      </div>
+      
+      <div class="input-group">
+        <i class="fas fa-envelope"></i>
+        <input type="email" placeholder="Email" required>
+      </div>
+      
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" placeholder="Password" required>
+      </div>
+      
+      <div class="input-group">
+        <i class="fas fa-map-marker-alt"></i>
+        <input type="text" placeholder="Location" required>
+      </div>
+      
+      <div class="input-group">
+        <i class="fas fa-phone"></i>
+        <input type="text" placeholder="Phone Number" required>
+      </div>
+      
+      <div id="sellerFields" style="display: none;">
+        <div class="input-group">
+          <i class="fas fa-shopping-bag"></i>
+          <input type="text" placeholder="Store/Shop Name">
+        </div>
+        
+        <div class="input-group">
+          <i class="fas fa-tags"></i>
+          <select>
+            <option value="">Select Item Category</option>
+            <option value="books">Books</option>
+            <option value="gadgets">Electronics & Gadgets</option>
+            <option value="furniture">Furniture</option>
+            <option value="clothing">Clothing & Accessories</option>
+            <option value="dorm">Dorm Essentials</option>
+          </select>
+        </div>
+      </div>
+      
+      <button type="submit" class="submit-btn">Sign Up</button>
+      
+      <div class="form-footer">
+        By signing up, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>
+      </div>
+    </form>
+    
+    <form id="loginForm" style="display: none;">
+      <div class="input-group">
+        <i class="fas fa-envelope"></i>
+        <input type="email" placeholder="Email" required>
+      </div>
+      
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" placeholder="Password" required>
+      </div>
+      
+      <div class="input-group" style="text-align: right;">
+        <a href="#" style="color: #7F00FF; text-decoration: none; font-size: 14px;">Forgot Password?</a>
+      </div>
+      
+      <button type="submit" class="submit-btn">Login</button>
+    </form>
+  </div>
+
+  <script>
+    // Toggle between Buyer and Seller
+    const buyerBtn = document.getElementById('buyerBtn');
+    const sellerBtn = document.getElementById('sellerBtn');
+    const sellerFields = document.getElementById('sellerFields');
+    const formTitle = document.getElementById('formTitle');
+    
+    buyerBtn.addEventListener('click', () => {
+      buyerBtn.classList.add('active');
+      sellerBtn.classList.remove('active');
+      sellerFields.style.display = 'none';
+      formTitle.textContent = document.getElementById('signupToggle').classList.contains('active') ? 'Buyer Signup' : 'Buyer Login';
+    });
+    
+    sellerBtn.addEventListener('click', () => {
+      sellerBtn.classList.add('active');
+      buyerBtn.classList.remove('active');
+      sellerFields.style.display = 'block';
+      formTitle.textContent = document.getElementById('signupToggle').classList.contains('active') ? 'Seller Signup' : 'Seller Login';
+    });
+    
+    // Toggle between Login and Signup
+    const loginToggle = document.getElementById('loginToggle');
+    const signupToggle = document.getElementById('signupToggle');
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+    
+    loginToggle.addEventListener('click', () => {
+      loginToggle.classList.add('active');
+      signupToggle.classList.remove('active');
+      loginForm.style.display = 'flex';
+      signupForm.style.display = 'none';
+      formTitle.textContent = buyerBtn.classList.contains('active') ? 'Buyer Login' : 'Seller Login';
+    });
+    
+    signupToggle.addEventListener('click', () => {
+      signupToggle.classList.add('active');
+      loginToggle.classList.remove('active');
+      signupForm.style.display = 'flex';
+      loginForm.style.display = 'none';
+      formTitle.textContent = buyerBtn.classList.contains('active') ? 'Buyer Signup' : 'Seller Signup';
+    });
+  </script>
+</body>
+</html>
