@@ -109,7 +109,7 @@
 
     .welcome-box {
       background: rgba(255, 255, 255, 0.3);
-      backdrop-filter: blur(12px);
+      
       padding: 60px 40px;
       border-radius: 20px;
       text-align: center;
@@ -179,14 +179,15 @@
       </div>
     </div>
     <div class="nav-links">
-      <a href="#">Login</a>
-      <a href="#">Signup</a>
-      <a href="#">Featured product</a>
-      <a href="#">Contact Us</a>
-      <a href="#">Buying Process</a>
-      <a href="#">Selling Process</a>
-      <a herf="#">Feedback</a>
+      <a href="login.html">Login/SignUp</a>
+      <a href="adminLogin.html">Admin login</a>
+      <a href="featured.html">Featured product</a>
+      <a href="contactUs.html">Contact Us</a>
+      
+      <a href="Aboutus.html">About Us</a>
+      <a href="Feedback.html">Feedback</a>
     </div>
+    
   </div>
 
   <!-- Main Content -->
@@ -199,10 +200,23 @@
         Let's thrift smart and make our campus greener together!
       </p>
     </div>
+    
   </div>
+  <footer style="background: #03bb44; color: rgb(76, 2, 85); padding: 30px 20px; text-align: center; font-size: 14px; margin-top: 200px;">
+    <div style="max-width: 1000px; margin: 0 auto;">
+      <p>&copy; 2025 Campus Thrift Store, CUET. All rights reserved.</p>
+      <p>Built with 💚 by CUET students | Contact: <a href="mailto:support@campusthrift.cuet" style="color: #ffd700; text-decoration: underline;">support@campusthrift.cuet</a></p>
+      <p>
+        <a href="#" style="color: #ffd700; margin: 0 10px;">Privacy Policy</a> |
+        <a href="#" style="color: #ffd700; margin: 0 10px;">Terms of Use</a> |
+        <a href="#" style="color: #ffd700; margin: 0 10px;">Help</a>
+      </p>
+    </div>
+  </footer>
 
   <!-- Typing Animation Reset Script -->
   <script>
+    
     const typingEl = document.querySelector(".typing");
     typingEl.addEventListener("animationend", () => {
       setTimeout(() => {

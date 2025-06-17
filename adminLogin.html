@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login | Campus Thrift Store</title>
+  <style>
+    body {
+      font-family: 'Roboto Slab', serif;
+      background: url('page1.png') no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .login-box {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+    }
+    .login-box h2 {
+      color: #4b0082;
+      margin-bottom: 25px;
+      font-family: 'Libre Baskerville', serif;
+    }
+    .login-box input {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 10px 0;
+      border: 2px solid #7F00FF;
+      border-radius: 30px;
+      font-size: 16px;
+      outline: none;
+    }
+    .login-box button {
+      background: linear-gradient(90deg, #7F00FF, #00FF87);
+      color: white;
+      border: none;
+      padding: 12px 0;
+      border-radius: 30px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: all 0.3s;
+    }
+    .login-box button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    #message {
+      color: #ff0000;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h2>🔐 Admin Portal</h2>
+    <input type="password" id="adminPassword" placeholder="Enter Admin Password">
+    <button onclick="checkAdminPassword()">Login</button>
+    <p id="message"></p>
+  </div>
+
+  <script>
+    const ADMIN_PASSWORD = "cuet123"; // Change this to your secure password
+    
+    function checkAdminPassword() {
+      const enteredPassword = document.getElementById("adminPassword").value;
+      const messageEl = document.getElementById("message");
+      
+      if (enteredPassword === ADMIN_PASSWORD) {
+        window.location.href = "admin.html"; // Redirect to dashboard
+      } else {
+        messageEl.textContent = "❌ Incorrect password! Try again.";
+      }
+    }
+  </script>
+</body>
+</html>

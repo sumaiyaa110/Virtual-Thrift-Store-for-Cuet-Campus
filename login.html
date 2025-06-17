@@ -259,22 +259,6 @@
         <input type="text" placeholder="Phone Number" required>
       </div>
       
-      <div id="sellerFields" style="display: none;">
-        
-        
-        <div class="input-group">
-          <i class="fas fa-tags"></i>
-          <select>
-            <option value="">Select Item Category</option>
-            <option value="books">Books(বই)</option>
-            <option value="gadgets">Electronics & Gadgets</option>
-            <option value="furniture">Furniture</option>
-            <option value="clothing">Sceen Care Product</option>
-            <option value="dorm">Dorm Essentials</option>
-          </select>
-        </div>
-      </div>
-      
       <button type="submit" class="submit-btn">Sign Up</button>
       
       <div class="form-footer">
@@ -302,47 +286,114 @@
   </div>
 
   <script>
-    // Toggle between Buyer and Seller
-    const buyerBtn = document.getElementById('buyerBtn');
-    const sellerBtn = document.getElementById('sellerBtn');
-    const sellerFields = document.getElementById('sellerFields');
-    const formTitle = document.getElementById('formTitle');
-    
-    buyerBtn.addEventListener('click', () => {
-      buyerBtn.classList.add('active');
-      sellerBtn.classList.remove('active');
-      sellerFields.style.display = 'none';
-      formTitle.textContent = document.getElementById('signupToggle').classList.contains('active') ? 'Buyer Signup' : 'Buyer Login';
-    });
-    
-    sellerBtn.addEventListener('click', () => {
-      sellerBtn.classList.add('active');
-      buyerBtn.classList.remove('active');
-      sellerFields.style.display = 'block';
-      formTitle.textContent = document.getElementById('signupToggle').classList.contains('active') ? 'Seller Signup' : 'Seller Login';
-    });
-    
-    // Toggle between Login and Signup
-    const loginToggle = document.getElementById('loginToggle');
-    const signupToggle = document.getElementById('signupToggle');
-    const loginForm = document.getElementById('loginForm');
-    const signupForm = document.getElementById('signupForm');
-    
-    loginToggle.addEventListener('click', () => {
-      loginToggle.classList.add('active');
-      signupToggle.classList.remove('active');
-      loginForm.style.display = 'flex';
-      signupForm.style.display = 'none';
-      formTitle.textContent = buyerBtn.classList.contains('active') ? 'Buyer Login' : 'Seller Login';
-    });
-    
-    signupToggle.addEventListener('click', () => {
-      signupToggle.classList.add('active');
-      loginToggle.classList.remove('active');
-      signupForm.style.display = 'flex';
-      loginForm.style.display = 'none';
-      formTitle.textContent = buyerBtn.classList.contains('active') ? 'Buyer Signup' : 'Seller Signup';
-    });
+  // Toggle between Buyer and Seller
+  const buyerBtn = document.getElementById('buyerBtn');
+  const sellerBtn = document.getElementById('sellerBtn');
+  const formTitle = document.getElementById('formTitle');
+
+  buyerBtn.addEventListener('click', () => {
+    buyerBtn.classList.add('active');
+    sellerBtn.classList.remove('active');
+    formTitle.textContent = document.getElementById('signupToggle').classList.contains('active') ? 'Buyer Signup' : 'Buyer Login';
+  });
+
+  sellerBtn.addEventListener('click', () => {
+    sellerBtn.classList.add('active');
+    buyerBtn.classList.remove('active');
+    formTitle.textContent = document.getElementById('signupToggle').classList.contains('active') ? 'Seller Signup' : 'Seller Login';
+  });
+
+  // Toggle between Login and Signup
+  const loginToggle = document.getElementById('loginToggle');
+  const signupToggle = document.getElementById('signupToggle');
+  const loginForm = document.getElementById('loginForm');
+  const signupForm = document.getElementById('signupForm');
+
+  loginToggle.addEventListener('click', () => {
+    loginToggle.classList.add('active');
+    signupToggle.classList.remove('active');
+    loginForm.style.display = 'flex';
+    signupForm.style.display = 'none';
+    formTitle.textContent = buyerBtn.classList.contains('active') ? 'Buyer Login' : 'Seller Login';
+  });
+
+  signupToggle.addEventListener('click', () => {
+    signupToggle.classList.add('active');
+    loginToggle.classList.remove('active');
+    signupForm.style.display = 'flex';
+    loginForm.style.display = 'none';
+    formTitle.textContent = buyerBtn.classList.contains('active') ? 'Buyer Signup' : 'Seller Signup';
+  });
+
+  // --- New: Signup form submission ---
+  signupForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const fullname = signupForm.querySelector('input[placeholder="Full Name"]').value.trim();
+    const email = signupForm.querySelector('input[placeholder="Email"]').value.trim();
+    const password = signupForm.querySelector('input[placeholder="Password"]').value;
+    const phone = signupForm.querySelector('input[placeholder="Phone Number"]').value.trim();
+
+    const role = buyerBtn.classList.contains('active') ? 'buyer' : 'seller';
+
+    try {
+      const response = await fetch('http://localhost:3000/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fullname, email, password, phone, role })
+      });
+
+      const data = await response.json();
+      alert(data.message);
+
+      if (response.ok) {
+        signupForm.reset();
+        // Optionally switch to login form after signup
+        loginToggle.click();
+      }
+
+    } catch (error) {
+      alert('Failed to connect to server.');
+      console.error(error);
+    }
+  });
+
+  // --- New: Login form submission ---
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const email = loginForm.querySelector('input[placeholder="Email"]').value.trim();
+    const password = loginForm.querySelector('input[placeholder="Password"]').value;
+
+    try {
+      const response = await fetch('http://localhost:3000/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(`Welcome, ${data.fullname} (${data.role})!`);
+        loginForm.reset();
+        // Store JWT token in localStorage
+        localStorage.setItem('token', data.token);
+
+        // Redirect to Seller Dashboard if the user is a seller
+        if (data.role === 'seller') {
+          window.location.href = 'SellerDashboard.html';  // Redirect to the Seller Dashboard page
+        }else if (data.role === 'buyer') {
+        window.location.href = 'Buyer.html';  // Redirect to Buyer Dashboard
+      }
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      alert('Failed to connect to server.');
+      console.error(error);
+    }
+  });
   </script>
 </body>
 </html>

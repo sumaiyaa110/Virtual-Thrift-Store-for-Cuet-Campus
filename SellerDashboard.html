@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CUET Thrift Store Seller Dashboard</title>
+  <style>
+    /* === CSS kept intact from your original code === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      display: flex;
+      background-color: #f0f8ff;
+      color: #333;
+    }
+
+    /* Hamburger Menu Button */
+    .menu-toggle {
+      font-size: 26px;
+      cursor: pointer;
+      color: #831eff;
+      background-color: #fff;
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin: 10px;
+      width: fit-content;
+      transition: 0.3s;
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1100;
+      display: block;
+    }
+
+    .menu-toggle:hover {
+      background-color: #5d0473;
+      color: white;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 240px;
+      height: 100vh;
+      background: linear-gradient(to bottom, #3cb371, #1e90ff);
+      color: #fff;
+      padding: 20px;
+      position: fixed;
+      left: 0;
+      top: 0;
+      transition: transform 0.3s ease-in-out;
+      transform: translateX(-100%);
+      z-index: 1000;
+    }
+
+    .sidebar.show {
+      transform: translateX(0);
+    }
+
+    .sidebar h2 {
+      font-size: 22px;
+      margin-bottom: 30px;
+      color: yellow;
+      margin-top: 65px;
+    }
+
+    .sidebar a {
+      display: block;
+      color: white;
+      padding: 10px 0;
+      text-decoration: none;
+      margin: 10px 0;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .sidebar a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      padding-left: 10px;
+    }
+
+    .sidebar a.active {
+      background-color: rgba(255, 255, 255, 0.3);
+      padding-left: 10px;
+    }
+
+    /* Main Content */
+    .main {
+      margin-left: 0;
+      padding: 20px;
+      flex: 1;
+      transition: margin-left 0.3s ease-in-out;
+      padding-top: 70px;
+    }
+
+    .main.sidebar-open {
+      margin-left: 240px;
+    }
+
+    .header {
+      background-color: purple;
+      padding: 15px 25px;
+      color: white;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .content-section {
+      display: none;
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    .cards {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      flex: 1 1 200px;
+      padding: 20px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #90ee90, #add8e6);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      color: #000;
+    }
+
+    .card h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 14px;
+    }
+
+    .section {
+      margin-top: 30px;
+    }
+
+    .section h2 {
+      color: #4b0082;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #08aa0b;
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .messages {
+      background-color: #fff0f5;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+
+    .msg {
+      margin-bottom: 10px;
+      padding: 10px;
+      background: #e2acef;
+      border-left: 5px solid purple;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 50px;
+      color: #045b14;
+    }
+
+    /* Overlay for mobile */
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .status-badge {
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .status-active {
+      background-color: #90ee90;
+      color: #006400;
+    }
+
+    .status-pending {
+      background-color: #ffd700;
+      color: #8b6914;
+    }
+
+    .status-sold {
+      background-color: #87ceeb;
+      color: #7246b4;
+    }
+
+    .status-featured {
+      background-color: #ff69b4;
+      color: #8b008b;
+    }
+
+    /* Buttons */
+    .btn-remove {
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-remove:hover {
+      background-color: #cc0000;
+    }
+
+    .btn-primary {
+      background-color: #3cb371;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #2e8b57;
+    }
+
+    /* Upload Form */
+    .upload-form {
+      background-color: #e2b7ed;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #4b0082;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #9eb3fc;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #3cb371;
+    }
+
+    .form-group textarea {
+      height: 100px;
+      resize: vertical;
+    }
+
+    .image-preview {
+      margin-top: 10px;
+      max-width: 200px;
+      max-height: 200px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .product-info h3 {
+      color: #4b0082;
+      margin-bottom: 10px;
+    }
+
+    .product-info p {
+      margin-bottom: 5px;
+      color: #666;
+    }
+
+    .product-price {
+      font-size: 18px;
+      font-weight: bold;
+      color: #3cb371;
+      margin: 10px 0;
+    }
+
+    .product-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    @media (min-width: 769px) {
+      .main.sidebar-open {
+        margin-left: 240px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .main {
+        margin-left: 0 !important;
+        padding-top: 70px;
+      }
+
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .sidebar.show {
+        transform: translateX(0);
+      }
+
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hamburger Menu Button -->
+  <div class="menu-toggle" onclick="toggleSidebar()">☰</div>
+
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <h2>🛒 Seller Panel</h2>
+    <a href="#" onclick="navigateTo('dashboard')" id="nav-dashboard" class="active">🗂️ Dashboard</a>
+    <a href="#" onclick="navigateTo('upload')" id="nav-upload">📤 Upload Product</a>
+    <a href="#" onclick="navigateTo('products')" id="nav-products">🗃️ My Products</a>
+    <a href="#" onclick="navigateTo('messages')" id="nav-messages">✉️ Messages</a>
+    <a href="featured.html" onclick="navigateTo('featured')" id="nav-featured">⭐ Featured Products</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main" id="mainContent">
+    <!-- Dashboard Section -->
+    <div class="content-section active" id="dashboard-section">
+      <div class="header">
+        <h1>Welcome Seller - Your Dashboard</h1>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <h3>Total Products</h3>
+          <p id="totalProducts"></p>
+        </div>
+        <div class="card">
+          <h3>Products Sold</h3>
+          <p id="soldProducts"></p>
+        </div>
+        <div class="card">
+          <h3>New Messages</h3>
+          <p id="newMessages"></p>
+        </div>
+        <div class="card">
+          <h3>Featured Products</h3>
+          <p id="featuredCount"></p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Recent Activity</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Action</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="recentActivity">
+            <!-- Dynamic recent activity rows go here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Upload Product Section -->
+    <div class="content-section" id="upload-section">
+      <div class="header">
+        <h1>Upload New Product</h1>
+      </div>
+
+      <div class="upload-form">
+        <form id="productForm">
+          <div class="form-group">
+            <label for="productName">Product Name *</label>
+            <input type="text" id="productName" name="name" required />
+          </div>
+
+          <div class="form-group">
+            <label for="category">Category *</label>
+            <select id="category" name="category" required>
+              <option value="">Select Category</option>
+              <option value="electronics">Electronics</option>
+              <option value="books">Books</option>
+              <option value="clothing">Clothing</option>
+              <option value="furniture">Furniture</option>
+              <option value="sports">Sports</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="price">Price (BDT) *</label>
+            <input type="number" id="price" name="price" min="1" required />
+          </div>
+
+          <div class="form-group">
+            <label for="condition">Condition *</label>
+            <select id="condition" name="product_condition" required>
+              <option value="">Select Condition</option>
+              <option value="new">New</option>
+              <option value="like-new">Like New</option>
+              <option value="good">Good</option>
+              <option value="fair">Fair</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea
+              id="description"
+              name="description"
+              placeholder="Describe your product..."
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="productImage">Product Image *</label>
+            <input
+              type="file"
+              id="productImage"
+              name="image"
+              accept="image/*"
+              required
+              onchange="previewImage(event)"
+            />
+            <img id="imagePreview" class="image-preview" alt="Preview" />
+          </div>
+
+          <button type="submit" class="btn-primary">Upload Product</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- My Products Section -->
+    <div class="content-section" id="products-section">
+      <div class="header">
+        <h1>My Products</h1>
+      </div>
+
+      <div class="product-grid" id="myProductsGrid">
+        <!-- Dynamic product cards go here -->
+      </div>
+    </div>
+
+    <!-- Messages Section -->
+    <div class="content-section" id="messages-section">
+      <div class="header">
+        <h1>Product Messages</h1>
+      </div>
+
+      <div class="messages" id="productMessages">
+        <!-- Dynamic messages go here -->
+      </div>
+    </div>
+
+    <!-- Featured Products Section -->
+    <div class="content-section" id="featured-section">
+      <div class="header">
+        <h1>Featured Products Status</h1>
+      </div>
+
+      <div class="section">
+        <h2>Your Featured Products</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Category</th>
+              <th>Price (BDT)</th>
+              <th>Featured Since</th>
+              <th>Views</th>
+            </tr>
+          </thead>
+          <tbody id="featuredProductsList">
+            <!-- Dynamic featured products rows -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>Products Under Review for Featured</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Category</th>
+              <th>Price (BDT)</th>
+              <th>Submitted</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="underReviewFeaturedList">
+            <!-- Dynamic under review products rows -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="footer">
+      &copy; 2025 CUET Virtual Thrift Store | Seller Dashboard
+    </div>
+  </div>
+
+  <script src="SellerDashboard.js"></script>
+</body>
+</html>

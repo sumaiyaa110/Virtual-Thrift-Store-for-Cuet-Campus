@@ -2,217 +2,489 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin Dashboard | Campus Thrift</title>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"/>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CUET Thrift Store Admin Panel</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
     }
 
     body {
-      font-family: 'Roboto Slab', serif;
       display: flex;
-      background: linear-gradient(to bottom right, #a18cd1, #fbc2eb);
+      background-color: #f0f8ff;
       color: #333;
-      min-height: 100vh;
+    }
+
+    /* Hamburger Menu Button */
+    .menu-toggle {
+      font-size: 26px;
+      cursor: pointer;
+      color: #831eff;
+      background-color: #fff;
+      
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin: 10px;
+      width: fit-content;
+      transition: 0.3s;
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1100;
+      display: block;
+    }
+
+    .menu-toggle:hover {
+      background-color: #5d0473;
+      color: white;
     }
 
     /* Sidebar */
     .sidebar {
-      width: 220px;
-      background: linear-gradient(to top, #7F00FF, #00FF87);
-      padding: 30px 20px;
-      color: white;
+      width: 240px;
+      height: 100vh;
+      background: linear-gradient(to bottom, #3cb371, #1e90ff);
+      color: #fff;
+      padding: 20px;
+      position: fixed;
+      left: 0;
+      top: 0;
+      transition: transform 0.3s ease-in-out;
+      transform: translateX(-100%);
+      z-index: 1000;
+    }
+
+    .sidebar.show {
+      transform: translateX(0);
     }
 
     .sidebar h2 {
-      font-size: 24px;
+      font-size: 22px;
       margin-bottom: 30px;
+      color: yellow;
+      margin-top: 65px;
+      
     }
 
     .sidebar a {
       display: block;
       color: white;
+      padding: 10px 0;
       text-decoration: none;
-      margin: 15px 0;
-      font-size: 16px;
-      transition: color 0.3s;
+      margin: 10px 0;
+      transition: 0.3s;
+      cursor: pointer;
     }
 
     .sidebar a:hover {
-      color: #fff000;
+      background-color: rgba(255, 255, 255, 0.2);
+      padding-left: 10px;
     }
 
-    /* Main Panel */
-    .main-content {
+    .sidebar a.active {
+      background-color: rgba(255, 255, 255, 0.3);
+      padding-left: 10px;
+    }
+
+    /* Main Content */
+    .main {
+      margin-left: 0;
+      padding: 20px;
       flex: 1;
-      padding: 40px;
+      transition: margin-left 0.3s ease-in-out;
+      padding-top: 70px;
     }
 
-    h1 {
-      font-size: 32px;
+    .main.sidebar-open {
+      margin-left: 240px;
+    }
+
+    .header {
+      background-color: purple;
+      padding: 15px 25px;
+      color: white;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .content-section {
+      display: none;
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    .cards {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      flex: 1 1 200px;
+      padding: 20px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #90ee90, #add8e6);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      color: #000;
+    }
+
+    .card h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 14px;
+    }
+
+    .section {
+      margin-top: 30px;
+    }
+
+    .section h2 {
       color: #4b0082;
-      margin-bottom: 30px;
-    }
-
-    .user-section {
-      margin-bottom: 40px;
+      margin-bottom: 10px;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      background: #fff;
-      border-radius: 12px;
+      background-color: #fff;
+      border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-top: 10px;
     }
 
     th, td {
-      padding: 15px;
+      padding: 12px;
       text-align: left;
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid #ddd;
     }
 
     th {
-      background-color: #7F00FF;
+      background-color: #08aa0b;
       color: white;
     }
 
-    td .actions button {
-      background-color: #00FF87;
-      color: #333;
-      padding: 6px 12px;
-      border: none;
-      border-radius: 6px;
-      margin-right: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background 0.2s;
+    tr:hover {
+      background-color: #f1f1f1;
     }
 
-    td .actions button:hover {
-      background-color: #fff000;
+    .messages {
+      background-color: #fff0f5;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+
+    .msg {
+      margin-bottom: 10px;
+      padding: 10px;
+      background: #e2acef;
+      border-left: 5px solid purple;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 50px;
+      color: #045b14;
+    }
+
+    /* Overlay for mobile */
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+     
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .status-badge {
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .status-active {
+      background-color: #90ee90;
+      color: #006400;
+    }
+
+    .status-pending {
+      background-color: #ffd700;
+      color: #8b6914;
+    }
+
+    .status-sold {
+      background-color: #87ceeb;
+      color: #7246b4;
+    }
+    /* Remove Buttons */
+    .btn-remove {
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-remove:hover {
+      background-color: #cc0000;
+    }
+
+    /* Sorting cursor */
+    th.sortable {
+      cursor: pointer;
+    }
+
+    /* Pagination styles */
+    .pagination {
+      margin-top: 15px;
+      text-align: right;
+    }
+
+    .pagination button {
+      padding: 6px 10px;
+      margin-left: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .pagination button.active {
+      background-color: #7F00FF;
+      color: white;
+      border-color: #7F00FF;
+    }
+
+    .pagination button:hover:not(.active) {
+      background-color: #f0e5ff;
+    }
+
+
+    @media (min-width: 769px) {
+      .main.sidebar-open {
+        margin-left: 240px;
+      }
     }
 
     @media (max-width: 768px) {
-      body {
-        flex-direction: column;
+      .main {
+        margin-left: 0 !important;
+        padding-top: 70px;
       }
+
       .sidebar {
-        width: 100%;
-        text-align: center;
+        transform: translateX(-100%);
       }
-      .main-content {
-        padding: 20px;
+
+      .sidebar.show {
+        transform: translateX(0);
       }
     }
   </style>
 </head>
 <body>
 
+  <!-- Hamburger Menu Button -->
+  <div class="menu-toggle" onclick="toggleSidebar()">☰</div>
+
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
   <!-- Sidebar -->
-  <div class="sidebar">
-    <h2>Admin Panel</h2>
-    <a href="#">Dashboard</a>
-    <a href="#">Manage Buyers</a>
-    <a href="#">Manage Sellers</a>
-    <a href="#">Reported Products</a>
-    <a href="#">Logout</a>
-  </div>
+ <div class="sidebar" id="sidebar">
+  <h2>💼 Admin Panel</h2>
+  <a href="#" onclick="navigateTo('dashboard')" id="nav-dashboard" class="active">📊 Dashboard</a>
+  <a href="#" onclick="navigateTo('buyers')" id="nav-buyers">👥 Buyers</a>
+  <a href="#" onclick="navigateTo('sellers')" id="nav-sellers">🏪 Sellers</a>
+  <a href="#" onclick="navigateTo('products')" id="nav-products">📦 Products Added</a>
+  <a href="#" onclick="navigateTo('sold')" id="nav-sold">✅ Sold Items</a>
+  <a href="#" onclick="navigateTo('messages')" id="nav-messages">💬 Messages</a>
+</div>
+
 
   <!-- Main Content -->
-  <div class="main-content">
-    <h1>👨‍💼 Admin Dashboard</h1>
+  <div class="main" id="mainContent">
+    
+    <!-- Dashboard Section -->
+    <div class="content-section active" id="dashboard-section">
+      <div class="header">
+        <h1>Welcome Admin - CUET Thrift Store Dashboard</h1>
+      </div>
 
-    <!-- Buyers -->
-    <div class="user-section">
-      <h2>👥 Buyers</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Batch</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="buyerTable">
-          <tr>
-            <td>Sadia Islam</td>
-            <td>sadia@cuet.ac.bd</td>
-            <td>CSE '24</td>
-            <td class="actions">
-              <button onclick="viewUser('Sadia Islam')">View</button>
-              <button onclick="removeUser(this)">Remove</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Tanvir Ahmed</td>
-            <td>tanvir@cuet.ac.bd</td>
-            <td>EEE '23</td>
-            <td class="actions">
-              <button onclick="viewUser('Tanvir Ahmed')">View</button>
-              <button onclick="removeUser(this)">Remove</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="cards">
+        <div class="card">
+          <h3>Items Sold Today</h3>
+          <p id="soldToday">5 items</p>
+        </div>
+        <div class="card">
+          <h3>Items Added Today</h3>
+          <p id="addedToday">8 items</p>
+        </div>
+        <div class="card">
+          <h3>Messages Received</h3>
+          <p id="messageCount">3 messages</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Today's Sold Items</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Seller</th>
+              <th>Buyer</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody id="soldItems"></tbody>
+        </table>
+      </div>
+
+      <div class="section">
+        <h2>Recent Messages</h2>
+        <div class="messages" id="messages"></div>
+      </div>
     </div>
 
-    <!-- Sellers -->
-    <div class="user-section">
-      <h2>🛍️ Sellers</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Batch</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="sellerTable">
-          <tr>
-            <td>Raihan Hossain</td>
-            <td>raihan@cuet.ac.bd</td>
-            <td>ME '22</td>
-            <td class="actions">
-              <button onclick="viewUser('Raihan Hossain')">View</button>
-              <button onclick="removeUser(this)">Remove</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Nusrat Jahan</td>
-            <td>nusrat@cuet.ac.bd</td>
-            <td>CE '24</td>
-            <td class="actions">
-              <button onclick="viewUser('Nusrat Jahan')">View</button>
-              <button onclick="removeUser(this)">Remove</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- Buyers Section -->
+    <div class="content-section" id="buyers-section">
+      <div class="header">
+        <h1>Buyers Management</h1>
+      </div>
+      <div class="section">
+        <h2>Registered Buyers</h2>
+        <input type="text" id="buyerSearch" placeholder="Search Buyers by name or ID" style="margin-bottom:10px; padding: 8px; width: 100%; max-width: 400px; border-radius: 6px; border: 1px solid #ccc;">
+        <table>
+          <thead>
+            <tr>
+              <th class="sortable" data-key="name" data-type="string">Name ▲▼</th>
+              <th class="sortable" data-key="id" data-type="string">Student ID ▲▼</th>
+              <th class="sortable" data-key="dept" data-type="string">Department ▲▼</th>
+              <th class="sortable" data-key="joinDate" data-type="date">Join Date ▲▼</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="buyersTable"></tbody>
+        </table>
+        <div class="pagination" id="buyersPagination"></div>
+      </div>
+    </div>
+
+    <!-- Sellers Section -->
+    <div class="content-section" id="sellers-section">
+      <div class="header">
+        <h1>Sellers Management</h1>
+      </div>
+      <div class="section">
+        <h2>Registered Sellers</h2>
+        <input type="text" id="sellerSearch" placeholder="Search Sellers by name or ID" style="margin-bottom:10px; padding: 8px; width: 100%; max-width: 400px; border-radius: 6px; border: 1px solid #ccc;">
+        <table>
+          <thead>
+            <tr>
+              <th class="sortable" data-key="name" data-type="string">Name ▲▼</th>
+              <th class="sortable" data-key="id" data-type="string">Student ID ▲▼</th>
+              <th class="sortable" data-key="dept" data-type="string">Department ▲▼</th>
+              <th class="sortable" data-key="listed" data-type="number">Items Listed ▲▼</th>
+              <th class="sortable" data-key="sold" data-type="number">Items Sold ▲▼</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="sellersTable"></tbody>
+        </table>
+        <div class="pagination" id="sellersPagination"></div>
+      </div>
+    </div>
+
+    <!-- Products Section -->
+    <div class="content-section" id="products-section">
+      <div class="header">
+        <h1>Products Management</h1>
+      </div>
+      <div class="section">
+        <h2>All Listed Products</h2>
+        <input type="text" id="productSearch" placeholder="Search Products by name or category" style="margin-bottom:10px; padding: 8px; width: 100%; max-width: 400px; border-radius: 6px; border: 1px solid #ccc;">
+        <table>
+          <thead>
+            <tr>
+              <th class="sortable" data-key="name" data-type="string">Product Name ▲▼</th>
+              <th class="sortable" data-key="category" data-type="string">Category ▲▼</th>
+              <th class="sortable" data-key="price" data-type="number">Price (BDT) ▲▼</th>
+              <th class="sortable" data-key="seller" data-type="string">Seller ▲▼</th>
+              <th class="sortable" data-key="date" data-type="date">Posted Date ▲▼</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="productsTable"></tbody>
+        </table>
+        <div class="pagination" id="productsPagination"></div>
+      </div>
+    </div>
+
+    <!-- Sold Items Section -->
+    <div class="content-section" id="sold-section">
+      <div class="header">
+        <h1>Sold Items History</h1>
+      </div>
+      <div class="section">
+        <h2>All Sold Items</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price (BDT)</th>
+              <th>Seller</th>
+              <th>Buyer</th>
+              <th>Sale Date</th>
+            </tr>
+          </thead>
+          <tbody id="allSoldItems"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Messages Section -->
+    <div class="content-section" id="messages-section">
+      <div class="header">
+        <h1>Messages & Support</h1>
+      </div>
+      <div class="section">
+        <h2>User Messages</h2>
+        <div class="messages" id="allMessages"></div>
+      </div>
+    </div>
+
+    <div class="footer">
+      &copy; 2025 CUET Virtual Thrift Store | Admin Panel
     </div>
   </div>
 
-  <script>
-    function removeUser(button) {
-      if (confirm("Are you sure you want to remove this user?")) {
-        button.closest("tr").remove();
-      }
-    }
-
-    function viewUser(name) {
-      alert("Viewing details of: " + name);
-      // You can later link this to a modal or user details page
-    }
-  </script>
+  <script src="admin.js"></script>
 </body>
 </html>
