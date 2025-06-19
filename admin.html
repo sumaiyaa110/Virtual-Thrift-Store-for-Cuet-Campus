@@ -251,37 +251,6 @@
       background-color: #cc0000;
     }
 
-    /* Sorting cursor */
-    th.sortable {
-      cursor: pointer;
-    }
-
-    /* Pagination styles */
-    .pagination {
-      margin-top: 15px;
-      text-align: right;
-    }
-
-    .pagination button {
-      padding: 6px 10px;
-      margin-left: 5px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      background: white;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    .pagination button.active {
-      background-color: #7F00FF;
-      color: white;
-      border-color: #7F00FF;
-    }
-
-    .pagination button:hover:not(.active) {
-      background-color: #f0e5ff;
-    }
-
 
     @media (min-width: 769px) {
       .main.sidebar-open {
@@ -322,6 +291,7 @@
   <a href="#" onclick="navigateTo('products')" id="nav-products">📦 Products Added</a>
   <a href="#" onclick="navigateTo('sold')" id="nav-sold">✅ Sold Items</a>
   <a href="#" onclick="navigateTo('messages')" id="nav-messages">💬 Messages</a>
+  <a href="home.html" onclick="navigateTo('Logout')" id="nav-messages">  Logout</a>
 </div>
 
 
@@ -377,21 +347,19 @@
       </div>
       <div class="section">
         <h2>Registered Buyers</h2>
-        <input type="text" id="buyerSearch" placeholder="Search Buyers by name or ID" style="margin-bottom:10px; padding: 8px; width: 100%; max-width: 400px; border-radius: 6px; border: 1px solid #ccc;">
         <table>
           <thead>
             <tr>
-              <th class="sortable" data-key="name" data-type="string">Name ▲▼</th>
-              <th class="sortable" data-key="id" data-type="string">Student ID ▲▼</th>
-              <th class="sortable" data-key="dept" data-type="string">Department ▲▼</th>
-              <th class="sortable" data-key="joinDate" data-type="date">Join Date ▲▼</th>
+              <th>Name</th>
+              <th>Student ID</th>
+              <th>Department</th>
+              <th>Join Date</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody id="buyersTable"></tbody>
         </table>
-        <div class="pagination" id="buyersPagination"></div>
       </div>
     </div>
 
@@ -402,22 +370,20 @@
       </div>
       <div class="section">
         <h2>Registered Sellers</h2>
-        <input type="text" id="sellerSearch" placeholder="Search Sellers by name or ID" style="margin-bottom:10px; padding: 8px; width: 100%; max-width: 400px; border-radius: 6px; border: 1px solid #ccc;">
         <table>
           <thead>
             <tr>
-              <th class="sortable" data-key="name" data-type="string">Name ▲▼</th>
-              <th class="sortable" data-key="id" data-type="string">Student ID ▲▼</th>
-              <th class="sortable" data-key="dept" data-type="string">Department ▲▼</th>
-              <th class="sortable" data-key="listed" data-type="number">Items Listed ▲▼</th>
-              <th class="sortable" data-key="sold" data-type="number">Items Sold ▲▼</th>
+              <th>Name</th>
+              <th>Student ID</th>
+              <th>Department</th>
+              <th>Items Listed</th>
+              <th>Items Sold</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody id="sellersTable"></tbody>
         </table>
-        <div class="pagination" id="sellersPagination"></div>
       </div>
     </div>
 
@@ -428,22 +394,20 @@
       </div>
       <div class="section">
         <h2>All Listed Products</h2>
-        <input type="text" id="productSearch" placeholder="Search Products by name or category" style="margin-bottom:10px; padding: 8px; width: 100%; max-width: 400px; border-radius: 6px; border: 1px solid #ccc;">
         <table>
           <thead>
             <tr>
-              <th class="sortable" data-key="name" data-type="string">Product Name ▲▼</th>
-              <th class="sortable" data-key="category" data-type="string">Category ▲▼</th>
-              <th class="sortable" data-key="price" data-type="number">Price (BDT) ▲▼</th>
-              <th class="sortable" data-key="seller" data-type="string">Seller ▲▼</th>
-              <th class="sortable" data-key="date" data-type="date">Posted Date ▲▼</th>
+              <th>Product Name</th>
+              <th>Category</th>
+              <th>Price (BDT)</th>
+              <th>Seller</th>
+              <th>Posted Date</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody id="productsTable"></tbody>
         </table>
-        <div class="pagination" id="productsPagination"></div>
       </div>
     </div>
 
@@ -462,6 +426,7 @@
               <th>Seller</th>
               <th>Buyer</th>
               <th>Sale Date</th>
+              
             </tr>
           </thead>
           <tbody id="allSoldItems"></tbody>
