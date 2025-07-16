@@ -358,42 +358,41 @@
     }
   });
 
-  // --- New: Login form submission ---
-  loginForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
+// --- Updated Login form submission ---
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-    const email = loginForm.querySelector('input[placeholder="Email"]').value.trim();
-    const password = loginForm.querySelector('input[placeholder="Password"]').value;
+  const email = loginForm.querySelector('input[placeholder="Email"]').value.trim();
+  const password = loginForm.querySelector('input[placeholder="Password"]').value;
+  const role = buyerBtn.classList.contains('active') ? 'buyer' : 'seller';
 
-    try {
-      const response = await fetch('http://localhost:3000/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      });
+  try {
+    const response = await fetch('http://localhost:3000/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, role })  // Send role too
+    });
 
-      const data = await response.json();
+    const data = await response.json();
 
-      if (response.ok) {
-        alert(`Welcome, ${data.fullname} (${data.role})!`);
-        loginForm.reset();
-        // Store JWT token in localStorage
-        localStorage.setItem('token', data.token);
+    if (response.ok) {
+      alert(`Welcome, ${data.fullname} (${data.role})!`);
+      loginForm.reset();
+      localStorage.setItem('token', data.token);
 
-        // Redirect to Seller Dashboard if the user is a seller
-        if (data.role === 'seller') {
-          window.location.href = 'SellerDashboard.html';  // Redirect to the Seller Dashboard page
-        }else if (data.role === 'buyer') {
-        window.location.href = 'Buyer.html';  // Redirect to Buyer Dashboard
+      if (data.role === 'seller') {
+        window.location.href = 'SellerDashboard.html';
+      } else if (data.role === 'buyer') {
+        window.location.href = 'Buyer.html';
       }
-      } else {
-        alert(data.message);
-      }
-    } catch (error) {
-      alert('Failed to connect to server.');
-      console.error(error);
+    } else {
+      alert(data.message);
     }
-  });
-  </script>
+  } catch (error) {
+    alert('Failed to connect to server.');
+    console.error(error);
+  }
+});
+</script>
 </body>
 </html>

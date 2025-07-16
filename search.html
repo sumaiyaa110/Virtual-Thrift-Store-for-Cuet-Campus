@@ -9,11 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet"/>
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Roboto Slab', serif;
@@ -61,7 +57,7 @@
     }
 
     .result-info {
-      font-size: 15px;
+      font-size: 14px;
       margin-bottom: 6px;
       line-height: 1.6;
     }
@@ -78,6 +74,13 @@
       margin-top: 10px;
     }
 
+    .no-results {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 1.2rem;
+      color: #6a0080;
+    }
+
     @media (max-width: 600px) {
       .result-card {
         padding: 15px;
@@ -87,43 +90,80 @@
 </head>
 <body>
 
-  <h1>🔍 Search Results for: <em>“Books”</em></h1>
+  <h1>🔍 Search Results for: <em id="searchQueryDisplay"></em></h1>
 
-  <div class="results-grid">
-    <!-- Result Card Example -->
-    <div class="result-card">
-      <img src="https://via.placeholder.com/300x180?text=Python+Book" alt="Python Book">
-      <h2>Python Programming - 3rd Edition</h2>
-      <div class="result-info"><span class="highlight">Seller:</span> Rafiul Hasan (CSE '22)</div>
-      <div class="result-info"><span class="highlight">Selling Price:</span> 500tk</div>
-      <div class="result-info"><span class="highlight">Original Price:</span> 700tk</div>
-      <div class="result-info"><span class="highlight">Purchase Date:</span> January 2023</div>
-      <div class="result-info"><span class="highlight">Expiry Date:</span> December 2025</div>
-      <div class="price-tag">💰 Save 200tk!</div>
-    </div>
+  <div class="results-grid" id="resultsGrid"></div>
 
-    <div class="result-card">
-      <img src="c.png" alt="Calculus Book">
-      <h2>Advanced Calculus - 2nd Edition</h2>
-      <div class="result-info"><span class="highlight">Seller:</span> Tanha Rahman (EEE '21)</div>
-      <div class="result-info"><span class="highlight">Selling Price:</span> 300tk</div>
-      <div class="result-info"><span class="highlight">Original Price:</span> 450tk</div>
-      <div class="result-info"><span class="highlight">Purchase Date:</span> September 2022</div>
-      <div class="result-info"><span class="highlight">Expiry Date:</span> September 2025</div>
-      <div class="price-tag">💰 Save 150tk!</div>
-    </div>
-
-    <div class="result-card">
-      <img src="m.png" alt="Mechanical Book">
-      <h2>Mechanics of Materials</h2>
-      <div class="result-info"><span class="highlight">Seller:</span> Nayeem Arafat (ME '23)</div>
-      <div class="result-info"><span class="highlight">Selling Price:</span> 320tk</div>
-      <div class="result-info"><span class="highlight">Original Price:</span> 500tk</div>
-      <div class="result-info"><span class="highlight">Purchase Date:</span> March 2023</div>
-      <div class="result-info"><span class="highlight">Expiry Date:</span> March 2026</div>
-      <div class="price-tag">💰 Save 180tk!</div>
-    </div>
+  <div class="no-results" id="noResults" style="display: none;">
+    No matching products found. Please try a different search term.
   </div>
 
+  <script>
+    function escapeHtml(text) {
+      if (!text) return '';
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function getQueryParam(name) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(name);
+    }
+
+    async function loadSearchResults() {
+      const query = getQueryParam('query');
+      const queryDisplay = document.getElementById('searchQueryDisplay');
+      const resultsGrid = document.getElementById('resultsGrid');
+      const noResults = document.getElementById('noResults');
+
+      if (!query) {
+        queryDisplay.textContent = 'No query given';
+        noResults.style.display = 'block';
+        return;
+      }
+
+      queryDisplay.textContent = `"${query}"`;
+
+      try {
+        const res = await fetch('http://localhost:3000/api/all-products');
+        const allProducts = await res.json();
+
+        const filtered = allProducts.filter(p =>
+          (p.name && p.name.toLowerCase().includes(query.toLowerCase())) ||
+          (p.category && p.category.toLowerCase().includes(query.toLowerCase())) ||
+          (p.description && p.description.toLowerCase().includes(query.toLowerCase()))
+        );
+
+        if (filtered.length === 0) {
+          noResults.style.display = 'block';
+          return;
+        }
+
+        resultsGrid.innerHTML = filtered.map(p => `
+          <div class="result-card">
+            <img src="http://localhost:3000${p.image}" alt="${escapeHtml(p.name)}">
+            <h2>${escapeHtml(p.name)}</h2>
+            <div class="result-info"><span class="highlight">Category:</span> ${escapeHtml(p.category)}</div>
+            <div class="result-info"><span class="highlight">Condition:</span> ${escapeHtml(p.product_condition)}</div>
+            <div class="result-info"><span class="highlight">Price:</span> ৳${p.price}</div>
+            <div class="result-info"><span class="highlight">Status:</span> ${escapeHtml(p.status)}</div>
+            <div class="result-info"><span class="highlight">Date Added:</span> ${new Date(p.dateAdded).toLocaleDateString()}</div>
+            <div class="result-info"><span class="highlight">Seller Name:</span> ${escapeHtml(p.seller_name)}</div>
+            <div class="result-info"><span class="highlight">Description:</span> ${escapeHtml(p.description)}</div>
+          </div>
+        `).join('');
+      } catch (err) {
+        noResults.innerHTML = "Something went wrong while fetching products.";
+        noResults.style.display = 'block';
+        console.error('Search fetch error:', err);
+      }
+    }
+
+    loadSearchResults();
+  </script>
 </body>
 </html>

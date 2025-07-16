@@ -395,6 +395,20 @@
         grid-template-columns: 1fr;
       }
     }
+
+    #imageModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
   </style>
 </head>
 <body>
@@ -410,8 +424,9 @@
     <a href="#" onclick="navigateTo('dashboard')" id="nav-dashboard" class="active">🗂️ Dashboard</a>
     <a href="#" onclick="navigateTo('upload')" id="nav-upload">📤 Upload Product</a>
     <a href="#" onclick="navigateTo('products')" id="nav-products">🗃️ My Products</a>
+    <a href="#" onclick="navigateTo('profile')" id="nav-profile">👤 Profile</a>
     <a href="#" onclick="navigateTo('messages')" id="nav-messages">✉️ Messages</a>
-    <a href="featured.html" onclick="navigateTo('featured')" id="nav-featured">⭐ Featured Products</a>
+    <a href="all-products.html" id="nav-featured">⭐ All Products</a>
     <a href="#" onclick="logout()">Logout</a>
   </div>
 
@@ -540,57 +555,73 @@
       </div>
     </div>
 
-    <!-- Messages Section -->
-    <div class="content-section" id="messages-section">
-      <div class="header">
-        <h1>Product Messages</h1>
+  <!-- Profile Section -->
+  <div class="content-section" id="profile-section">
+    <div class="header">
+      <h1>My Profile</h1>
+      <p>Manage your account information</p>
+    </div>
+    
+    <div class="section">
+      <h2>Personal Information</h2>
+      <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
+        <label><strong>Name:</strong></label>
+        <input type="text" id="sellerName" disabled style="width:100%; margin-bottom:10px; padding:8px;">
+
+        <label><strong>Student ID:</strong></label>
+        <input type="text" id="studentId" disabled style="width:100%; margin-bottom:10px; padding:8px;">
+
+        <label><strong>Department:</strong></label>
+        <input type="text" id="department" disabled style="width:100%; margin-bottom:10px; padding:8px;">
+
+        <label><strong>Phone:</strong></label>
+        <input type="text" id="phone" disabled style="width:100%; margin-bottom:10px; padding:8px;">
+
+        <label><strong>Email:</strong></label>
+        <input type="email" id="email" disabled style="width:100%; margin-bottom:10px; padding:8px;">
+
+        <button class="btn-primary" id="editProfileBtn">Edit</button>
+        <button class="btn-primary" id="saveProfileBtn" style="display:none; margin-left: 10px;">Save</button>
+        <button class="btn-primary" id="cancelEditBtn" style="display:none; background-color:#888;">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Messages Section -->
+<div class="content-section" id="messages-section">
+  <div class="header">
+    <h1>Product Messages</h1>
+  </div>
+
+  <div style="display: flex; gap: 15px;">
+
+    <!-- Left: Conversations List -->
+    <div id="conversationsList" style="width: 30%; border-right: 1px solid #ccc; height: 400px; overflow-y: auto;">
+      <!-- Conversations list will appear here -->
+    </div>
+
+    <!-- Right: Messages + Reply + Confirm Order -->
+    <div style="width: 65%; display: flex; flex-direction: column;">
+      <!-- Messages Area -->
+      <div id="messagesContainer" style="flex-grow: 1; overflow-y: auto; padding-left: 15px; height: 350px;">
+        <!-- Messages will be shown here -->
       </div>
 
-      <div class="messages" id="productMessages">
-        <!-- Dynamic messages go here -->
+      <!-- Confirm Order Button -->
+      <div style="padding-left: 15px; margin-top: 10px;">
+        <button id="confirmOrderBtn" class="btn-primary" style="display: none;">
+          ✅ Confirm Order to this Buyer
+        </button>
       </div>
     </div>
 
-    <!-- Featured Products Section -->
-    <div class="content-section" id="featured-section">
+  </div>
+</div>
+
+    <!-- All Products Section -->
+    <div class="content-section" id="all-products-section">
       <div class="header">
-        <h1>Featured Products Status</h1>
-      </div>
-
-      <div class="section">
-        <h2>Your Featured Products</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Product Name</th>
-              <th>Category</th>
-              <th>Price (BDT)</th>
-              <th>Featured Since</th>
-              <th>Views</th>
-            </tr>
-          </thead>
-          <tbody id="featuredProductsList">
-            <!-- Dynamic featured products rows -->
-          </tbody>
-        </table>
-      </div>
-
-      <div class="section">
-        <h2>Products Under Review for Featured</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Product Name</th>
-              <th>Category</th>
-              <th>Price (BDT)</th>
-              <th>Submitted</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody id="underReviewFeaturedList">
-            <!-- Dynamic under review products rows -->
-          </tbody>
-        </table>
+        <h1><a href="all-products.html">View All Products</a></h1>
       </div>
     </div>
 
@@ -598,6 +629,12 @@
       &copy; 2025 CUET Virtual Thrift Store | Seller Dashboard
     </div>
   </div>
+
+  <!-- Full Image Modal -->
+<div id="imageModal" style="display:none;" onclick="closeImageModal()">
+  <span style="position: absolute; top: 20px; right: 30px; font-size: 40px; color: white; cursor: pointer;" onclick="closeImageModal(event)">×</span>
+  <img id="fullImage" style="max-width: 90vw; max-height: 90vh; display: block; margin: 50px auto; border-radius: 10px;" />
+</div>
 
   <script src="SellerDashboard.js"></script>
 </body>

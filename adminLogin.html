@@ -68,19 +68,38 @@
     <p id="message"></p>
   </div>
 
-  <script>
-    const ADMIN_PASSWORD = "cuet123"; // Change this to your secure password
-    
-    function checkAdminPassword() {
-      const enteredPassword = document.getElementById("adminPassword").value;
-      const messageEl = document.getElementById("message");
-      
-      if (enteredPassword === ADMIN_PASSWORD) {
-        window.location.href = "admin.html"; // Redirect to dashboard
-      } else {
-        messageEl.textContent = "❌ Incorrect password! Try again.";
+<script>
+  async function checkAdminPassword() {
+    const enteredPassword = document.getElementById("adminPassword").value;
+    const messageEl = document.getElementById("message");
+
+    try {
+      const response = await fetch('http://localhost:3000/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: enteredPassword })
+      });
+
+      if (!response.ok) {
+        const err = await response.json();
+        messageEl.textContent = "❌ " + (err.message || "Login failed");
+        return;
       }
+
+      const data = await response.json();
+      localStorage.setItem('adminToken', data.token);
+      messageEl.style.color = 'green';
+      messageEl.textContent = "✅ Login successful! Redirecting...";
+
+      // Redirect after a short delay
+      setTimeout(() => {
+        window.location.href = "admin.html";
+      }, 1000);
+
+    } catch (error) {
+      messageEl.textContent = "❌ Network error. Try again.";
     }
-  </script>
+  }
+</script>
 </body>
 </html>

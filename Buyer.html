@@ -351,6 +351,62 @@
         grid-template-columns: 1fr;
       }
     }
+      .message-card {
+    border: 1px solid #ddd;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background-color: #fff0f5;
+    box-shadow: 0 2px 8px rgba(128, 0, 128, 0.1);
+  }
+
+  .message-card p {
+    margin: 5px 0;
+  }
+
+  .message-card strong {
+    color: #831eff;
+  }
+
+  .message {
+  margin: 5px;
+  padding: 8px;
+  border-radius: 10px;
+  max-width: 75%;
+}
+.message.left {
+  background-color: #f1f1f1;
+  text-align: left;
+}
+.message.right {
+  background-color: #d1e7dd;
+  text-align: right;
+  margin-left: auto;
+}
+
+/* Close button style for chat modal */
+#chatModal .close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  line-height: 24px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+#chatModal .close-btn:hover {
+  background-color: #cc0000;
+}
+
   </style>
 </head>
 <body>
@@ -365,10 +421,12 @@
   <div class="sidebar" id="sidebar">
     <h2>🛒 Buyer Panel</h2>
     <a href="#" onclick="navigateTo('dashboard')" id="nav-dashboard" class="active">📊 Dashboard</a>
+    <a href="#" onclick="navigateTo('products')" id="nav-products">🛍️ All Products</a> 
     <a href="#" onclick="navigateTo('orders')" id="nav-orders">📦 My Orders</a>
     <a href="#" onclick="navigateTo('wishlist')" id="nav-wishlist">❤️ Wishlist</a>
     <a href="#" onclick="navigateTo('cart')" id="nav-cart">🛒 Shopping Cart</a>
     <a href="#" onclick="navigateTo('profile')" id="nav-profile">👤 Profile</a>
+    <a href="#" onclick="navigateTo('messages')" id="nav-messages">💬 Messages</a>
     <a href="#" onclick="logout()">🚪 Logout</a>
   </div>
 
@@ -376,69 +434,45 @@
   <div class="main" id="mainContent">
     
     <!-- Dashboard Section -->
-    <div class="content-section active" id="dashboard-section">
-      <div class="header">
-        <h1>Welcome Back! - Your Buyer Dashboard</h1>
-        <p>Discover great deals from fellow CUET students</p>
-      </div>
+  <div class="content-section active" id="dashboard-section">
+    <div class="header">
+      <h1>Welcome Back! - Your Buyer Dashboard</h1>
+      <p>Discover great deals from fellow CUET students</p>
+    </div>
 
-      <div class="cards">
-        <div class="card">
-          <h3>Total Orders</h3>
-          <p id="totalOrders">8</p>
-        </div>
-        <div class="card">
-          <h3>Wishlist Items</h3>
-          <p id="wishlistCount">5</p>
-        </div>
-        <div class="card">
-          <h3>Cart Items</h3>
-          <p id="cartCount">3</p>
-        </div>
-        <div class="card">
-          <h3>Saved Money</h3>
-          <p id="savedMoney">৳2,500</p>
-        </div>
+    <div class="cards">
+      <div class="card">
+        <h3>Total Orders</h3>
+        <p id="totalOrders">0</p>
       </div>
-
-      <div class="section">
-        <h2>Recent Orders</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Product</th>
-              <th>Seller</th>
-              <th>Price</th>
-              <th>Order Date</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody id="recentOrders">
-            <tr>
-              <td>Programming Book</td>
-              <td>Ahmed (CSE)</td>
-              <td>৳300</td>
-              <td>2025-06-05</td>
-              <td><span class="status-badge status-delivered">Delivered</span></td>
-            </tr>
-            <tr>
-              <td>Scientific Calculator</td>
-              <td>Fatima (EEE)</td>
-              <td>৳1,200</td>
-              <td>2025-06-07</td>
-              <td><span class="status-badge status-shipped">Shipped</span></td>
-            </tr>
-            <tr>
-              <td>Study Lamp</td>
-              <td>Rakib (ME)</td>
-              <td>৳200</td>
-              <td>2025-06-08</td>
-              <td><span class="status-badge status-pending">Pending</span></td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="card">
+        <h3>Wishlist Items</h3>
+        <p id="wishlistCount">0</p>
+      </div>
+      <div class="card">
+        <h3>Cart Items</h3>
+        <p id="cartCount">0</p>
       </div>
     </div>
+
+    <div class="section">
+      <h2>Recent Orders</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Seller</th>
+            <th>Price</th>
+            <th>Order Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="recentOrders">
+          <!-- Dynamically populated -->
+        </tbody>
+      </table>
+    </div>
+  </div>
 
     <!-- Orders Section -->
     <div class="content-section" id="orders-section">
@@ -501,17 +535,7 @@
       <div class="cart-grid" id="cartGrid">
         <!-- Cart items will be loaded here -->
       </div>
-      
-      <div class="section">
-        <h2>Cart Summary</h2>
-        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
-          <p><strong>Total Items: <span id="cartTotalItems">3</span></strong></p>
-          <p><strong>Total Amount: ৳<span id="cartTotal">4,200</span></strong></p>
-          <button class="btn-primary" style="margin-top: 15px; padding: 12px 24px;" onclick="proceedToCheckout()">Proceed to Checkout</button>
-        </div>
-      </div>
     </div>
-
 
     <!-- Profile Section -->
     <div class="content-section" id="profile-section">
@@ -523,39 +547,91 @@
       <div class="section">
         <h2>Personal Information</h2>
         <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
-          <p><strong>Name:</strong> <span id="userName">Student Name</span></p>
-          <p><strong>Student ID:</strong> <span id="studentId">2021331XXX</span></p>
-          <p><strong>Department:</strong> <span id="department">Computer Science & Engineering</span></p>
-          <p><strong>Hall:</strong> <span id="hall">Kazi Nazrul Islam Hall</span></p>
-          <p><strong>Room:</strong> <span id="room">Room 201</span></p>
-          <p><strong>Phone:</strong> <span id="phone">+880XXXXXXXXX</span></p>
-          <p><strong>Email:</strong> <span id="email">student@cuet.ac.bd</span></p>
-        </div>
-      </div>
+          <label><strong>Name:</strong></label>
+          <input type="text" id="userName" disabled style="width:100%; margin-bottom:10px; padding:8px;">
 
-      <div class="section">
-        <h2>Purchase Statistics</h2>
-        <div class="cards">
-          <div class="card">
-            <h3>Total Spent</h3>
-            <p>৳12,450</p>
-          </div>
-          <div class="card">
-            <h3>Orders This Month</h3>
-            <p>3</p>
-          </div>
-          <div class="card">
-            <h3>Favorite Category</h3>
-            <p>Electronics</p>
-          </div>
+          <label><strong>Student ID:</strong></label>
+          <input type="text" id="studentId" disabled style="width:100%; margin-bottom:10px; padding:8px;">
+
+          <label><strong>Department:</strong></label>
+          <input type="text" id="department" disabled style="width:100%; margin-bottom:10px; padding:8px;">
+
+          <label><strong>Phone:</strong></label>
+          <input type="text" id="phone" disabled style="width:100%; margin-bottom:10px; padding:8px;">
+
+          <label><strong>Email:</strong></label>
+          <input type="email" id="email" disabled style="width:100%; margin-bottom:10px; padding:8px;">
+
+          <button class="btn-primary" id="editProfileBtn">Edit</button>
+          <button class="btn-primary" id="saveProfileBtn" style="display:none; margin-left: 10px;">Save</button>
+          <button class="btn-primary" id="cancelEditBtn" style="display:none; background-color:#888;">Cancel</button>
         </div>
       </div>
     </div>
 
+    <div class="content-section" id="messages-section">
+  <div class="header">
+    <h1>Messages</h1>
+    <p>View your messages and replies from sellers</p>
+  </div>
+
+  <div id="messagesContainer">
+    <!-- Messages with replies will be dynamically inserted here -->
+  </div>
+</div>
+
+        <div class="content-section" id="products-section">
+      <div class="header">
+        <h1>All Products from CUET Sellers</h1>
+        <p>Browse and shop from all available items</p>
+      </div>
+
+      <input type="text" class="search-bar" placeholder="Search products..." onkeyup="searchProducts(this.value)">
+
+      <div class="wishlist-grid" id="productsGrid">
+        <!-- All products loaded by loadAllProducts() -->
+      </div>
+    </div>
     <div class="footer">
       &copy; 2025 CUET Virtual Thrift Store | Buyer Dashboard
     </div>
   </div>
+
+  <div id="chatModal" style="display:none; position:fixed; top:10%; left:50%; transform:translateX(-50%);
+ background:#fff; width:90%; max-width:400px; border:1px solid #ccc; z-index:1000; padding:10px;">
+  <h3>Messages</h3>
+  <button class="close-btn" onclick="document.getElementById('chatModal').style.display='none'">&times;</button>
+  <div id="chatMessages" style="height:300px; overflow-y:auto; border:1px solid #ddd; padding:5px;"></div>
+  <input type="text" id="messageInput" placeholder="Type a message..." style="width:80%;" />
+  <button id="sendMsgBtn" class="btn-primary">Send</button>
+  <button onclick="document.getElementById('chatModal').style.display='none'" class="btn-secondary">Close</button>
+</div>
+
+<!-- Image Preview Modal -->
+<div id="imageModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
+background: rgba(0,0,0,0.7); z-index: 1200; justify-content: center; align-items: center;">
+  <div style="position: relative; max-width: 90%; max-height: 90%;">
+    <button id="imageModalClose" style="
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      font-size: 24px;
+      font-weight: bold;
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      cursor: pointer;
+      line-height: 30px;
+      text-align: center;
+      transition: background-color 0.3s ease;
+      z-index: 1300;
+    ">&times;</button>
+    <img id="modalImage" src="" alt="Product Image" style="max-width: 100%; max-height: 100%; border-radius: 10px;" />
+  </div>
+</div>
 
    <script src="Buyer.js"></script>
 </body>

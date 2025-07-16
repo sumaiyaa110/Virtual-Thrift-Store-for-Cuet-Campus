@@ -5,15 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Campus Thrift Store</title>
 
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto+Slab:wght@400;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet"/>
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Roboto Slab', serif;
@@ -109,7 +104,6 @@
 
     .welcome-box {
       background: rgba(255, 255, 255, 0.3);
-      
       padding: 60px 40px;
       border-radius: 20px;
       text-align: center;
@@ -145,25 +139,20 @@
       animation: typing 4s steps(40, end) forwards;
     }
 
+    footer {
+      background: #03bb44;
+      color: rgb(76, 2, 85);
+      padding: 30px 20px;
+      text-align: center;
+      font-size: 14px;
+      margin-top: 200px;
+    }
+
     @media screen and (max-width: 768px) {
-      .navbar {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .logo-search-container {
-        width: 100%;
-        margin-bottom: 15px;
-      }
-
-      .nav-links {
-        width: 100%;
-        justify-content: space-around;
-      }
-
-      .main-content {
-        padding: 40px 15px;
-      }
+      .navbar { flex-direction: column; align-items: flex-start; }
+      .logo-search-container { width: 100%; margin-bottom: 15px; }
+      .nav-links { width: 100%; justify-content: space-around; }
+      .main-content { padding: 40px 15px; }
     }
   </style>
 </head>
@@ -174,20 +163,18 @@
     <div class="logo-search-container">
       <div class="logo">♻️ Campus Thrift</div>
       <div class="search-bar">
-        <input type="text" placeholder="Search campus items...">
-        <button>🔍</button>
+        <input type="text" id="homeSearchInput" placeholder="Search campus items...">
+        <button id="homeSearchBtn">🔍</button>
       </div>
     </div>
     <div class="nav-links">
-      <a href="login.html">Login/SignUp</a>
-      <a href="adminLogin.html">Admin login</a>
-      <a href="featured.html">Featured product</a>
-      <a href="contactUs.html">Contact Us</a>
-      
-      <a href="Aboutus.html">About Us</a>
-      <a href="Feedback.html">Feedback</a>
+      <a href="login.html" target="_blank">Login/SignUp</a>
+      <a href="adminLogin.html" target="_blank">Admin login</a>
+      <a href="all-products.html" target="_blank">All products</a>
+      <a href="contactUs.html" target="_blank">Contact Us</a>
+      <a href="Aboutus.html" target="_blank">About Us</a>
+      <a href="Feedback.html" target="_blank">Feedback</a>
     </div>
-    
   </div>
 
   <!-- Main Content -->
@@ -200,23 +187,42 @@
         Let's thrift smart and make our campus greener together!
       </p>
     </div>
-    
   </div>
-  <footer style="background: #03bb44; color: rgb(76, 2, 85); padding: 30px 20px; text-align: center; font-size: 14px; margin-top: 200px;">
+
+  <footer>
     <div style="max-width: 1000px; margin: 0 auto;">
       <p>&copy; 2025 Campus Thrift Store, CUET. All rights reserved.</p>
-      <p>Built with 💚 by CUET students | Contact: <a href="mailto:support@campusthrift.cuet" style="color: #ffd700; text-decoration: underline;">support@campusthrift.cuet</a></p>
+      <p>Built with 💚 by CUET students | Contact: <a href="mailto:support@campusthrift.cuet" style="color: #ffd700;">support@campusthrift.cuet</a></p>
       <p>
-        <a href="#" style="color: #ffd700; margin: 0 10px;">Privacy Policy</a> |
-        <a href="#" style="color: #ffd700; margin: 0 10px;">Terms of Use</a> |
-        <a href="#" style="color: #ffd700; margin: 0 10px;">Help</a>
+        <a href="#" style="color: #ffd700;">Privacy Policy</a> |
+        <a href="#" style="color: #ffd700;">Terms of Use</a> |
+        <a href="#" style="color: #ffd700;">Help</a>
       </p>
     </div>
   </footer>
 
-  <!-- Typing Animation Reset Script -->
+  <!-- Scripts -->
   <script>
-    
+    const searchInput = document.getElementById('homeSearchInput');
+    const searchBtn = document.getElementById('homeSearchBtn');
+
+    searchBtn.addEventListener('click', () => {
+      const keyword = searchInput.value.trim();
+      if (keyword) {
+        window.location.href = `search.html?query=${encodeURIComponent(keyword)}`;
+      }
+    });
+
+    searchInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        const keyword = searchInput.value.trim();
+        if (keyword) {
+          window.location.href = `search.html?query=${encodeURIComponent(keyword)}`;
+        }
+      }
+    });
+
+    // Typing animation reset
     const typingEl = document.querySelector(".typing");
     typingEl.addEventListener("animationend", () => {
       setTimeout(() => {
