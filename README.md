@@ -47,13 +47,12 @@ A sustainable and student-friendly platform for buying, selling, or donating sec
 
 **Frontend**
 - HTML, CSS, JavaScript
-- Bootstrap / Tailwind CSS
 
 **Backend**
-- Node.js + Express.js *(or Spring Boot – please confirm)*
+- Node.js + Express.js 
 
 **Database**
-- MySQL *(or MongoDB – please confirm)*
+- MySQL 
 
 **Authentication**
 - CUET Email Verification (for Buyers)
