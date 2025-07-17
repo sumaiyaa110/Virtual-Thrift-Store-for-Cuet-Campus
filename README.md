@@ -17,13 +17,13 @@ Welcome to the **Virtual Thrift Store for CUET Campus** — a user-friendly and 
 
 ## 👥 User Roles
 
-### 👩‍🎓 Buyer (CUET Students Only)
+### 👩‍🎓 Buyer (Anyone)
 - View all available products.
 - Contact sellers directly from the product page.
 - Add products to **Cart** or **Wishlist**.
 - View feedback and reach out via the **Contact Us** page.
 
-### 🧑‍🔧 Seller (Anyone)
+### 🧑‍🔧 Seller (CUET Students Only)
 - Upload product with image, description, and price.
 - View uploaded product list.
 - See messages from buyers on individual product listings.
@@ -45,7 +45,7 @@ Welcome to the **Virtual Thrift Store for CUET Campus** — a user-friendly and 
 ![Home Page](homeCSS.png)
 
 ### 🔐 Login / Sign Up
-![Login Page](SingupCSS.png)
+![Login Page](SignupCSS.png)
 
 ### 🛡️ Admin Dashboard
 ![Admin Dashboard](./assets/admin-dashboard.png)
@@ -76,12 +76,13 @@ Welcome to the **Virtual Thrift Store for CUET Campus** — a user-friendly and 
 - HTML5, CSS, JavaScript
 
 **Backend**
-- Node.js with Express.js 
+- Node.js with Express.js
+  
 **Database**
-- MySQL *(or MongoDB – please confirm)*
+- MySQL 
 
 **Authentication**
-- CUET email verification for buyers
+- CUET email verification for sellers
 - Session/token-based login for all users
 - Role-based routing and access control
 
