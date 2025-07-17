@@ -1,6 +1,6 @@
 # 🧥 Virtual Thrift Store for CUET Campus
 
-Welcome to the **Virtual Thrift Store for CUET Campus** — a user-friendly and sustainable platform where CUET students can buy, sell, or donate used items like clothes, books, gadgets, etc., within their campus community.
+Welcome to the **Virtual Thrift Store for CUET Campus** — a user-friendly and sustainable platform where CUET students can buy, sell used items like clothes, books, gadgets, etc., within their campus community.
 
 ---
 
