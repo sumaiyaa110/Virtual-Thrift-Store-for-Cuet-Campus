@@ -42,7 +42,7 @@ Welcome to the **Virtual Thrift Store for CUET Campus** — a user-friendly and 
 > *(Upload your screenshots in the `assets` folder and reference them below)*
 
 ### 🏠 Home Page
-![Home Page](./assets/home-page.png)
+![Home Page](homeCss.png)
 
 ### 🔐 Login / Sign Up
 ![Login Page](./assets/login-page.png)
