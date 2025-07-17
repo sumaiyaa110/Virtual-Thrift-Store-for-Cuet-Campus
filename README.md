@@ -45,7 +45,7 @@ Welcome to the **Virtual Thrift Store for CUET Campus** — a user-friendly and 
 ![Home Page](homeCSS.png)
 
 ### 🔐 Login / Sign Up
-![Login Page](./assets/login-page.png)
+![Login Page](SingupCSS.png)
 
 ### 🛡️ Admin Dashboard
 ![Admin Dashboard](./assets/admin-dashboard.png)
