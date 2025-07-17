@@ -1,74 +1,89 @@
 # 🧥 Virtual Thrift Store for CUET Campus
 
-A sustainable and student-friendly platform for buying, selling, or donating second-hand items within CUET Campus.
-
-![Home Page Preview](./assets/homepage-preview.png) <!-- You can replace this with your actual image path -->
+Welcome to the **Virtual Thrift Store for CUET Campus** — a user-friendly and sustainable platform where CUET students can buy, sell, or donate used items like clothes, books, gadgets, etc., within their campus community.
 
 ---
 
-## 🌐 Live Demo
+## 🌟 Key Highlights
 
-[🔗 Visit the Site](#) *(Add your deployed link here)*
-
----
-
-## 📌 Key Features
-
-### 🏠 Homepage Highlights
-- 🔍 **Search Bar** – Users can easily search for products by name or category.
-- 🧭 **Navigation Bar** – Includes: Home | Featured Products | About Us | Contact Us | Feedback | Sign Up/Login | Admin Login
-- 💡 **Featured Section** – Displays highlighted or trending products.
+- 🔍 **Powerful Home Page** – Beautifully designed landing page with product search functionality.
+- 🧭 **Navigation Bar** – Includes: Sign Up / Login, Featured Products, About Us, Contact Us, Feedback, Admin Login.
+- 🛍️ **Role-based Access** – Buyer (CUET students), Seller (Anyone), Admin (Single system admin).
+- 💬 **Messaging System** – Buyers can contact sellers directly for any product.
+- 🛒 **Wishlist & Cart** – Buyers can add products to their cart or wishlist for later.
+- 🛠️ **Admin Control** – Admin can manage users, verify product statuses, and view daily sales.
 
 ---
 
 ## 👥 User Roles
 
-### 👤 Buyer
-- Must be a **CUET student** (validated via CUET email).
-- Can browse, search, and purchase products.
-- Can send feedback and contact the seller directly.
+### 👩‍🎓 Buyer (CUET Students Only)
+- View all available products.
+- Contact sellers directly from the product page.
+- Add products to **Cart** or **Wishlist**.
+- View feedback and reach out via the **Contact Us** page.
 
-### 🧑‍💼 Seller
-- Can be **anyone** (not restricted to CUET).
-- Can post products for sale with images, descriptions, and price.
-- Can mark products as sold.
+### 🧑‍🔧 Seller (Anyone)
+- Upload product with image, description, and price.
+- View uploaded product list.
+- See messages from buyers on individual product listings.
+- View list of products sold daily.
 
-### 🛠️ Admin
-- Only **one admin** exists.
-- Can:
-  - View all registered **buyers and sellers**
-  - See a list of **products sold today**
-  - **Mark** products as **Active** or **Sold**
-  - View a **history of all sold products**
+### 🛡️ Admin (Only One)
+- View complete lists of **buyers** and **sellers**.
+- See today's **sold products**.
+- Change product status to **Active** or **Sold**.
+- View full list of **sold items** historically.
 
 ---
 
-## 🛠️ Tech Stack
+## 📸 Screenshots
+
+> *(Upload your screenshots in the `assets` folder and reference them below)*
+
+### 🏠 Home Page
+![Home Page](./assets/home-page.png)
+
+### 🔐 Login / Sign Up
+![Login Page](./assets/login-page.png)
+
+### 🛡️ Admin Dashboard
+![Admin Dashboard](./assets/admin-dashboard.png)
+
+### 👩‍🎓 Buyer Dashboard
+![Buyer Dashboard](./assets/buyer-dashboard.png)
+
+### 🧑‍🔧 Seller Dashboard
+![Seller Dashboard](./assets/seller-dashboard.png)
+
+### 💬 Messaging Page
+![Messaging Page](./assets/message-page.png)
+
+### 📝 About Us
+![About Us Page](./assets/about-page.png)
+
+### 📩 Contact Page
+![Contact Page](./assets/contact-page.png)
+
+### 🗣️ Feedback Page
+![Feedback Page](./assets/feedback-page.png)
+
+---
+
+## ⚙️ Tech Stack
 
 **Frontend**
-- HTML, CSS, JavaScript
+- HTML5, CSS, JavaScript
 
 **Backend**
-- Node.js + Express.js 
-
+- Node.js with Express.js 
 **Database**
-- MySQL 
+- MySQL *(or MongoDB – please confirm)*
 
 **Authentication**
-- CUET Email Verification (for Buyers)
-- Role-Based Login (Admin, Buyer, Seller)
-
----
-
-## 🖼️ Screenshots
-
-> Add your UI images here. Example below:
-
-### 🖥️ Homepage
-![Homepage Screenshot](./assets/homepage.png)
-
-### 🔐 Admin Panel
-![Admin Panel Screenshot](./assets/admin-panel.png)
+- CUET email verification for buyers
+- Session/token-based login for all users
+- Role-based routing and access control
 
 ---
 
