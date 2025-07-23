@@ -83,7 +83,20 @@ Admins can view, edit, or remove any products listed by sellers on the platform.
 ![Buyer Dashboard](buyer-dashboard.png)
 
 ### 🧑‍🔧 Seller Dashboard
-![Seller Dashboard](seller-dashboard.png)
+
+The Seller Dashboard allows sellers to manage their products and listings, all connected to the database for real-time updates.
+
+
+#### Main Page  
+Sellers can view their listed products directly from the dashboard.  
+![Manage Listings](sellerCss1.jpg)
+
+---
+
+#### Uploading Products  
+Sellers can upload new products with details like name, price, description, and images.  
+![Upload Products](sellerCss2.jpg)
+
 
 ### 💬 Messaging Page
 ![Messaging Page](seller_message.jpg)
@@ -95,7 +108,7 @@ Admins can view, edit, or remove any products listed by sellers on the platform.
 ![Contact Page](contactCss.png)
 
 ### 🗣️ Feedback Page
-![Feedback Page](./assets/feedback-page.png)
+![Feedback Page](feedback(1).jpg)
 
 ---
 
