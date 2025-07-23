@@ -53,19 +53,19 @@ The Admin Dashboard provides multiple management features, fetching data dynamic
 
 #### Main Page
 Displays an overview of all important statistics and data fetched from the backend APIs.
-![Admin Dashboard Main](admin11.png)
+![Admin Dashboard Main](admin11.jpg)
 
 ---
 
 #### Managing Registered Sellers
 Admins can view, approve, or remove registered sellers from the platform.
-![Manage Sellers](admin22.png)
+![Manage Sellers](admin22.jpg)
 
 ---
 
 #### Managing Buyers
 View and manage all registered buyers, including account details and activities.
-![Manage Buyers](admin44.png)
+![Manage Buyers](admin44.jpg)
 
 ---
 
@@ -77,7 +77,7 @@ Track and manage items sold through the platform, including order status and rev
 
 #### Managing All Listed Products
 Admins can view, edit, or remove any products listed by sellers on the platform.
-![Manage Products](admin33.png)
+![Manage Products](admin33.jpg)
 
 
 ### 👩‍🎓 Buyer Dashboard
