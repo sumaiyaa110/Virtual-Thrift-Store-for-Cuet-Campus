@@ -95,7 +95,7 @@ Sellers can view their listed products directly from the dashboard.
 
 #### Uploading Products  
 Sellers can upload new products with details like name, price, description, and images.  
-![Upload Products](sellerCss2.jpg)
+![Upload Products](sellerCss2(2).jpg)
 
 
 ### 💬 Messaging Page
