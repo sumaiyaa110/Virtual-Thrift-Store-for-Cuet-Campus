@@ -80,7 +80,37 @@ Admins can view, edit, or remove any products listed by sellers on the platform.
 
 
 ### 👩‍🎓 Buyer Dashboard
-![Buyer Dashboard](buyer-dashboard.png)
+
+The Buyer Dashboard allows buyers to manage their purchases, personal data, saved items, and communicate with sellers. All data is dynamically loaded from backend APIs and connected to the database.
+
+#### Purchased & Saved Items  
+View all purchased products and saved items in one place, dynamically fetched from the backend.  
+![Purchased and Saved Items](buyer-dashboard.jpg)
+
+---
+
+#### Products List (Dynamic)  
+Browse the product list, dynamically loaded via backend APIs for real-time updates.  
+![Products List](products_buy.jpg)
+
+---
+
+#### Check Order List  
+Buyers can track and manage their past and current orders, connected directly to the database.  
+![Order List](oder.jpg)
+
+---
+
+#### Manage Personal Info  
+Easily update personal details like name, email, and address, connected to the database for instant updates.  
+![Manage Personal Info](personal.jpg)
+
+---
+
+#### Messaging with Sellers  
+Buyers can send and receive messages with sellers directly from the dashboard, making it easy to ask questions or negotiate deals.  
+![Messaging Feature](buyer_message.jpg)
+
 
 ### 🧑‍🔧 Seller Dashboard
 
@@ -95,7 +125,7 @@ Sellers can view their listed products directly from the dashboard.
 
 #### Uploading Products  
 Sellers can upload new products with details like name, price, description, and images.  
-![Upload Products](sellerCss2(2).png)
+![Upload Products](sellerCss2 (2).png)
 
 
 ### 💬 Messaging Page
