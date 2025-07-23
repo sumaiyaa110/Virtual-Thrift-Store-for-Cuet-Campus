@@ -68,9 +68,9 @@ View and manage all registered buyers, including account details and activities.
 
 ---
 
-#### Managing Sold Items
-Track and manage items sold through the platform, including order status and revenue.
-![Manage Sold Items](admin44.png)
+#### Sold Items History
+Track sold through the platform, including buyer, seller and sale date.
+![Manage Sold Items](admin44.jpg)
 
 ---
 
