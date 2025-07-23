@@ -48,13 +48,43 @@ Welcome to the **Virtual Thrift Store for CUET Campus** — a user-friendly and 
 ![Login Page](SignupCSS.png)
 
 ### 🛡️ Admin Dashboard
-![Admin Dashboard](./assets/admin-dashboard.png)
+
+The Admin Dashboard provides multiple management features, fetching data dynamically from backend APIs (users and products).
+
+#### Main Page
+Displays an overview of all important statistics and data fetched from the backend APIs.
+![Admin Dashboard Main](admin-dashboard.png)
+
+---
+
+#### Managing Registered Sellers
+Admins can view, approve, or remove registered sellers from the platform.
+![Manage Sellers](admin-dashboard-sellers.png)
+
+---
+
+#### Managing Buyers
+View and manage all registered buyers, including account details and activities.
+![Manage Buyers](admin-dashboard-buyers.png)
+
+---
+
+#### Managing Sold Items
+Track and manage items sold through the platform, including order status and revenue.
+![Manage Sold Items](admin-dashboard-sold-items.png)
+
+---
+
+#### Managing All Listed Products
+Admins can view, edit, or remove any products listed by sellers on the platform.
+![Manage Products](admin-dashboard-products.png)
+
 
 ### 👩‍🎓 Buyer Dashboard
-![Buyer Dashboard](./assets/buyer-dashboard.png)
+![Buyer Dashboard](buyer-dashboard.png)
 
 ### 🧑‍🔧 Seller Dashboard
-![Seller Dashboard](./assets/seller-dashboard.png)
+![Seller Dashboard](seller-dashboard.png)
 
 ### 💬 Messaging Page
 ![Messaging Page](seller_message.jpg)
