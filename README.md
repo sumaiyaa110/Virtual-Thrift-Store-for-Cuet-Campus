@@ -85,7 +85,7 @@ The Buyer Dashboard allows buyers to manage their purchases, personal data, save
 
 #### Purchased & Saved Items  
 View all purchased products and saved items in one place, dynamically fetched from the backend.  
-![Purchased and Saved Items](buyer-dashboard.jpg)
+![Purchased and Saved Items](buyer-dashboard(1).jpg)
 
 ---
 
@@ -97,7 +97,7 @@ Browse the product list, dynamically loaded via backend APIs for real-time updat
 
 #### Check Order List  
 Buyers can track and manage their past and current orders, connected directly to the database.  
-![Order List](oder.jpg)
+![Order List](order.jpg)
 
 ---
 
