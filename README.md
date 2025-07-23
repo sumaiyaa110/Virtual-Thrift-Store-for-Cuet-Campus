@@ -89,10 +89,10 @@ Admins can view, edit, or remove any products listed by sellers on the platform.
 ![Messaging Page](seller_message.jpg)
 
 ### 📝 About Us
-![About Us Page](./assets/about-page.png)
+![About Us Page](aboutCss.png)
 
 ### 📩 Contact Page
-![Contact Page](./assets/contact-page.png)
+![Contact Page](contactCss.png)
 
 ### 🗣️ Feedback Page
 ![Feedback Page](./assets/feedback-page.png)
