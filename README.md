@@ -89,13 +89,13 @@ The Seller Dashboard allows sellers to manage their products and listings, all c
 
 #### Main Page  
 Sellers can view their listed products directly from the dashboard.  
-![Manage Listings](sellerCss1.jpg)
+![Manage Listings](sellerCss1.png)
 
 ---
 
 #### Uploading Products  
 Sellers can upload new products with details like name, price, description, and images.  
-![Upload Products](sellerCss2(2).jpg)
+![Upload Products](sellerCss2(2).png)
 
 
 ### 💬 Messaging Page
