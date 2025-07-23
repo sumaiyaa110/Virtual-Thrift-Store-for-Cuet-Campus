@@ -83,9 +83,9 @@ Admins can view, edit, or remove any products listed by sellers on the platform.
 
 The Buyer Dashboard allows buyers to manage their purchases, personal data, saved items, and communicate with sellers. All data is dynamically loaded from backend APIs and connected to the database.
 
-#### Purchased & Saved Items  
+#### Main Page  
 View all purchased products and saved items in one place, dynamically fetched from the backend.  
-![Purchased and Saved Items](buyer-dashboard(1).jpg)
+![Purchased and Saved Items](buyer_dashboard.jpg)
 
 ---
 
