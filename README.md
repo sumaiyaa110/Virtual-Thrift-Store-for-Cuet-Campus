@@ -39,7 +39,6 @@ Welcome to the **Virtual Thrift Store for CUET Campus** — a user-friendly and 
 
 ## 📸 Screenshots
 
-> *(Upload your screenshots in the `assets` folder and reference them below)*
 
 ### 🏠 Home Page
 ![Home Page](homeCSS.png)
@@ -53,25 +52,25 @@ The Admin Dashboard provides multiple management features, fetching data dynamic
 
 #### Main Page
 Displays an overview of all important statistics and data fetched from the backend APIs.
-![Admin Dashboard Main](admin11.jpg)
+![Admin Dashboard Main](adminCss(1).jpg)
 
 ---
 
 #### Managing Registered Sellers
 Admins can view, approve, or remove registered sellers from the platform.
-![Manage Sellers](admin22.jpg)
+![Manage Sellers](admin11.jpg)
 
 ---
 
 #### Managing Buyers
 View and manage all registered buyers, including account details and activities.
-![Manage Buyers](admin44.jpg)
+![Manage Buyers](admin22.jpg)
 
 ---
 
 #### Managing Sold Items
 Track and manage items sold through the platform, including order status and revenue.
-![Manage Sold Items](admin-dashboard-sold-items.png)
+![Manage Sold Items](admin44.png)
 
 ---
 
