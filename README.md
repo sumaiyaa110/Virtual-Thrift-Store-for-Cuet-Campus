@@ -263,24 +263,22 @@ Sellers can upload new products with details like name, price, description, and 
 ## 📂 Folder Structure
 
 ```
-virtual-thrift-store-cuet/
-├── public/
-│   ├── css/
-│   ├── js/
-│   ├── images/
-│   └── uploads/
-├── views/
-│   ├── pages/
-│   └── partials/
-├── routes/
-├── models/
-├── middleware/
-├── config/
-├── .env
-├── package.json
-├── server.js
-└── README.md
+campus-thrift-backend/
+├── node_modules/          # Dependencies (auto-generated)
+├── uploads/              # Uploaded product images
+├── .env                  # Environment variables
+├── index.js             # Main server file
+├── package-lock.json    # Dependency lock file
+├── package.json         # Project configuration and dependencies
+└── README.md           # Project documentation
 ```
+
+**Key Files:**
+- **index.js** - Main Node.js server file with Express routes
+- **package.json** - Contains project dependencies and scripts
+- **.env** - Database and server configuration
+- **uploads/** - Directory for storing product images uploaded by sellers
+- **node_modules/** - Auto-generated folder containing all npm packages
 
 ---
 
